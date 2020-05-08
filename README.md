@@ -38,3 +38,5 @@ And, you can change the `trycnt` variable to change the number of retry.
 If you meet any problems, please touch with me.
 
 Email: winsoul@foxmail.com.
+
+⭐Give it a star if you like it.⭐
