@@ -30,9 +30,11 @@ The key come from [HCP dataset](https://db.humanconnectome.org/), and you should
 In this script, I want to download some files whose name include `_RL.nii.gz` or `_LR.nii.gz` in `HCP_1200/{$subject_number}/MNINonLinear/Results/tfMRI*`.
 
 You can change the `keyList = bucket.objects.filter(Prefix = {$your_filter})` to filter files.
+
 And, you can change the `trycnt` variable to change the number of retry.
 
 ## About
 
 If you meet some problem, please touch with me.
+
 Email: winsoul@foxmail.com.
