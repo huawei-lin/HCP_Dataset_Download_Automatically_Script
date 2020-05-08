@@ -70,7 +70,7 @@ def download_subject(bucket, subject_number, output_path):
                 logger.error('%s: %s error!  %d/%d (%s tries)', subject_number, tarPath.split('/')[-1], idx + 1, totalNumber, trycnt)
                 logger.error('{}'.format(str(exc)))
         if trycnt == 10:
-            logger.error('%s: %s did not download!')
+            logger.error('%s: %s did not download!', subject_number, tarPath.split('/')[-1])
             
     logger.info('%s completed!', subject_number)
     
