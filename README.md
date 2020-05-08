@@ -8,7 +8,7 @@ subjects.txt  - subjects number list
 
 ## How to use
 
-Look at [boto3 Docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation)
+Please look at [boto3 Docs](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation).
 
 First, boto3 should be downloaded.
 ```
