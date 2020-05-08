@@ -7,11 +7,9 @@ theTime = datetime.datetime.now().strftime('%Y-%m-%d-%H_%M_%S')
 os.makedirs(theTime)
 
 logger = logging.getLogger('script')
-logger.setLevel(level = logging.DEBUG)
-
-
 formatter = logging.Formatter('%(asctime)s[line:%(lineno)d] - %(levelname)s: %(message)s')
-
+logger.setLevel(level = logging.DEBUG)
+logger.propagate = False
 
 file_handler = logging.FileHandler('./{}/INFO.log'.format(theTime))
 file_handler.setLevel(level = logging.INFO)
@@ -28,8 +26,6 @@ stream_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 logger.addHandler(warning_handler)
 logger.addHandler(stream_handler)
-
-logging.info('Bucket built!')
 
 # Set parameters
 bucketName = 'hcp-openaccess'
@@ -76,7 +72,7 @@ def download_subject(bucket, subject_number, output_path):
     
 
 def main():
-    
+    logger.info('Loading...')
     # Init variable
     boto3.setup_default_session()
     s3 = boto3.resource('s3')
