@@ -3,6 +3,11 @@ import os
 import logging
 import datetime
 
+# Set parameters
+bucketName = 'hcp-openaccess'
+prefix = 'HCP_1200'
+outputPath =  'G:\\'
+
 theTime = datetime.datetime.now().strftime('%Y-%m-%d-%H_%M_%S')
 os.makedirs(theTime)
 
@@ -27,9 +32,7 @@ logger.addHandler(file_handler)
 logger.addHandler(warning_handler)
 logger.addHandler(stream_handler)
 
-# Set parameters
-bucketName = 'hcp-openaccess'
-prefix = 'HCP_1200'
+
 
 def download_subject(bucket, subject_number, output_path):
     # Get the target file list
@@ -83,7 +86,7 @@ def main():
     with open('./subjects.txt', 'r') as fr:
         for subject_number in fr.readlines():
             subject_number = subject_number.strip()
-            download_subject(bucket, subject_number, 'G:\\')
+            download_subject(bucket, subject_number, outputPath)
             downloaded += 1
             logger.info('%s subjects have been downloaded!', downloaded)
             
