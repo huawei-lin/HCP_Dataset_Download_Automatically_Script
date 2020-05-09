@@ -26,7 +26,7 @@ aws_secret_access_key = YOUR_SECRET_KEY
 
 The key come from [HCP dataset](https://db.humanconnectome.org/), and you should click the button of 'Amazon S3 Access enabled'.
 
-## Detail
+## Details
 In this script, I want to download some files whose name include `_RL.nii.gz` or `_LR.nii.gz` in `HCP_1200/{$subject_number}/MNINonLinear/Results/tfMRI*`.
 
 You can change the `keyList = bucket.objects.filter(Prefix = {$your_filter})` to filter files.
