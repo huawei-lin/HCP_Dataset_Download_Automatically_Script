@@ -38,7 +38,7 @@ def download_subject(bucket, subject_number, output_path):
     # Get the target file list
     keyList = bucket.objects.filter(Prefix = prefix + '/{}/MNINonLinear/Results/tfMRI'.format(subject_number))
     keyList = [key.key for key in keyList]
-    keyList = [x for x in keyList if '_LR.nii.gz' in x or '_RL.nii.gz' in x]
+    keyList = [x for x in keyList if '_LR.nii.gz' in x or '_RL.nii.gz' in x or 'EVs' in x]
     
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -46,10 +46,13 @@ def download_subject(bucket, subject_number, output_path):
     totalNumber = len(keyList)
     trycnt = 0
     
-    logger.info('%s: Begin to download %d keys', subject_number, totalNumber)
-    if totalNumber != 14:
+    
+    
+    tempKeys = [x for x in keyList if '_LR.nii.gz' in x or '_RL.nii.gz' in x]
+    if len(tempKeys) != 14:
         logger.warning('%s: just havs %d keys, please check again!', subject_number, totalNumber)
     
+    logger.info('%s: Begin to download %d keys', subject_number, totalNumber)
     for idx, tarPath in enumerate(keyList):
         downloadPath = os.path.join(output_path, tarPath)
         downloadDir = os.path.dirname(downloadPath)
@@ -59,9 +62,13 @@ def download_subject(bucket, subject_number, output_path):
             try:
                 if not os.path.exists(downloadPath):
                     bucket.download_file(tarPath, downloadPath)
-                    logger.info('%s: %s downloaded!  %d/%d', subject_number, tarPath.split('/')[-1], idx + 1, totalNumber)
-                else:
-                    logger.info('%s: %s already exists!  %d/%d', subject_number, tarPath.split('/')[-1], idx + 1, totalNumber)
+#                    logger.info('%s: %s downloaded!  %d/%d', subject_number, tarPath.split('/')[-1], idx + 1, totalNumber)
+#                else:
+#                    logger.info('%s: %s already exists!  %d/%d', subject_number, tarPath.split('/')[-1], idx + 1, totalNumber)
+                if (idx + 1)%(totalNumber//4) == 0:
+                    logger.info('%s: %.2f%% downloaded!', subject_number, (float((idx + 1)/totalNumber) * 100))
+                if trycnt > 0:
+                    ('%s: %s downloded!  %d/%d', subject_number, tarPath.split('/')[-1], idx + 1, totalNumber)
                 trycnt = 0
                 break
             except Exception as exc:
