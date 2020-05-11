@@ -80,6 +80,8 @@ def download_subject(bucket, subject_number, output_path):
             
     logger.info('%s completed!', subject_number)
     
+    with open('downloaded.txt', 'a') as fa:
+        fa.write(subject_number + '\n')
 
 def main():
     logger.info('Loading...')
@@ -89,10 +91,27 @@ def main():
     bucket = s3.Bucket(bucketName)
     logger.info('Bucket built!')
     
-    downloaded = 0
+    
+    downloadedList = []
+    
+    if not os.path.exists('./downloaded.txt'):
+        fw = open('./downloaded.txt', 'w')
+        fw.close()
+        
+    with open('./downloaded.txt', 'r') as fr:
+        for subject_number in fr.readlines():
+            subject_number = subject_number.strip()
+            downloadedList.append(subject_number)
+    
+    downloaded = len(downloadedList)
+    
+    
     with open('./subjects.txt', 'r') as fr:
         for subject_number in fr.readlines():
             subject_number = subject_number.strip()
+            if subject_number in downloadedList:
+                logger.error('%s already downloaded', subject_number)
+                continue
             download_subject(bucket, subject_number, outputPath)
             downloaded += 1
             logger.info('%s subjects have been downloaded!', downloaded)
