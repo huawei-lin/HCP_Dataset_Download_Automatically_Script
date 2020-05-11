@@ -110,7 +110,7 @@ def main():
         for subject_number in fr.readlines():
             subject_number = subject_number.strip()
             if subject_number in downloadedList:
-                logger.error('%s already downloaded', subject_number)
+                logger.warning('%s already downloaded', subject_number)
                 continue
             download_subject(bucket, subject_number, outputPath)
             downloaded += 1
